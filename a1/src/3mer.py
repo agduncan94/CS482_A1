@@ -7,9 +7,10 @@ if (len(sys.argv) != 2):
 
 fastaFile = sys.argv[1]
 sequence = ''
-sequenceCount = 0
 sequenceLength = 0
 numOfKmers = 0
+kmerDictionairy = {}
+
 
 with open(fastaFile, 'r') as file:
 	for line in file:
@@ -17,11 +18,26 @@ with open(fastaFile, 'r') as file:
 			# new sequence
 			if (len(sequence) > 0):
 				# sequence has been stored, now get information
-				for (c in sequence):
-					
+				kmerLength = 0
+				kmerString = ''
+				print sequence
+				for c in sequence:
+					if (c.upper() == 'A' or c.upper() == 'C' or c.upper() == 'T' or c.upper() == 'G'):
+						kmerLength += 1
+						kmerString += c.upper()
 
-			print "New Sequence " + str(sequenceCount)
-			sequenceCount += 1
+						# if kmer is of length 3, add it to freq
+						if (kmerLength == 3):
+							if (not kmerString in kmerDictionairy):
+								kmerDictionairy[kmerString] = 1
+							else:
+								kmerDictionairy[kmerString] = kmerDictionairy[kmerString] + 1
+							kmerString = ''
+							kmerLength = 0
+							numOfKmers += 1
+
+
+
 			sequence = ''
 		elif (line.startswith(";")):
 			# comment
@@ -30,3 +46,6 @@ with open(fastaFile, 'r') as file:
 			# non empty
 			sequence += line.strip().rstrip("\r\n")
 
+for key, value in kmerDictionairy.iteritems():
+	#print key + " %.4f" % (float(value)/float(numOfKmers))
+	print key + " " + str(value)
