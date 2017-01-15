@@ -1,0 +1,7 @@
+;this is a comment
+>header seq1
+ACTTTTTGGTCAGATAGAGTGGAGATGAAAGGGTAAA
+;this is another comment
+ACTTTTTTT
+>header seq 2
+ATTCT

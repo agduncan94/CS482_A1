@@ -63,15 +63,17 @@ with open(fastaFile, 'r') as file:
 			analyzeString()
 		elif (line.startswith(";")):
 			# comment
-			# need to find a better way to deal
-			# perhaps just put in the elif below if line.strip()
-			print "comment"
+			sequence += ''
 		elif (line.strip()):
 			# non empty
 			sequence += line.strip().rstrip("\r\n")
 
 # Analyze final sequence in file
 analyzeString()
+
+# If no k-mers found, set numOfKmers to 1 so that there won't be a division by 0 error
+if (numOfKmers == 0):
+	numOfKmers = 1
 
 for key, value in sorted(kmerDictionary.iteritems()):
 	print key + " %.4f" % (float(value)/float(numOfKmers))
