@@ -9,6 +9,6 @@
 4. Contains letters not in {A, C, T, G}
 5. Sequence of only non ACTG
 6. One sequence, no header 
-7.
-8.
-9.
+7. Contains spaces before header >
+8. Contains spaces before comment ;
+9. Contains whitespace within a sequence (spaces)

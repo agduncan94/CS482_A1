@@ -23,7 +23,7 @@ def analyzeString():
 	global sequence
 
 	# if the sequence is valid (>0 amino acids)
-	if (len(sequence) > 0):
+	if (len(sequence) >= 3):
 		# sequence has been stored, now get information
 		kmerString = ''
 		index = 0
@@ -35,9 +35,6 @@ def analyzeString():
 
 			# Create 3-mer string
 			for offset in range(0,3):
-				# is this necessary?
-				# if (index + offset == len(sequence)):
-				# 	break
 				aaOfInterest = sequence[index + offset]
 				kmerString += aaOfInterest.upper()
 
@@ -58,15 +55,15 @@ def analyzeString():
 # open file
 with open(fastaFile, 'r') as file:
 	for line in file:
-		if (line.startswith(">")):
+		if (line.strip().startswith(">")):
 			# new sequence
 			analyzeString()
-		elif (line.startswith(";")):
+		elif (line.strip().startswith(";")):
 			# comment
 			sequence += ''
 		elif (line.strip()):
 			# non empty
-			sequence += line.strip().rstrip("\r\n")
+			sequence += line.strip().rstrip("\r\n").replace(" ","")
 
 # Analyze final sequence in file
 analyzeString()
